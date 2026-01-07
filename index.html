@@ -160,13 +160,17 @@ const estructura = {
 let estado = JSON.parse(localStorage.getItem("estadoUC")) || {};
 
 function checkPrevias(previas) {
+    if (previas.length === 0) return true;
+
     if (previas.includes("ALL")) {
         return materias.every(m => estado[m.id]);
     }
+
     if (previas.includes("TRIENIO")) {
         return ["UC1","UC2","UC3","UC4","UC5","UC6","UC7","UC8","UC9","UC10","UC11","UC12","UC13","UC14"]
             .every(id => estado[id]);
     }
+
     return previas.every(p => {
         if (p.includes("|")) {
             return p.split("|").some(opt => estado[opt]);
@@ -186,22 +190,24 @@ function render() {
 
         for (const semestre in estructura[año]) {
             col.innerHTML += `<h3>${semestre}</h3>`;
+
             estructura[año][semestre].forEach(id => {
                 const m = materias.find(x => x.id === id);
-                const ok = checkPrevias(m.previas);
+                const previasOK = checkPrevias(m.previas);
+
                 const div = document.createElement("div");
                 div.className = "uc";
                 div.textContent = m.nombre;
 
-                if (!ok && !estado[id]) {
+                if (estado[id]) {
+                    div.classList.add("approved");
+                } else if (!previasOK) {
                     div.classList.add("locked");
                     div.dataset.tooltip = "Faltan:\n" + m.previas.join(", ");
-                } else if (estado[id]) {
-                    div.classList.add("approved");
                 }
 
                 div.onclick = () => {
-                    if (div.classList.contains("locked")) return;
+                    if (!estado[id] && !previasOK) return;
                     estado[id] = !estado[id];
                     localStorage.setItem("estadoUC", JSON.stringify(estado));
                     render();
@@ -216,6 +222,7 @@ function render() {
 
 render();
 </script>
+
 
 </body>
 </html>
