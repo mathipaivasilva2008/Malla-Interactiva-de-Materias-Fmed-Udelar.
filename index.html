@@ -159,7 +159,10 @@ function tienePrevias(m){
 
   return m.previas.every(p=>{
     if(p==="TRIENIO") return [1,2,3,4,5,6,7,8,9,10,11,12].every(id=>aprobadas.includes(id));
-    if(p==="ALL") return materias.every(x=>aprobadas.includes(x.id));
+   if(p==="ALL") return materias
+  .filter(x => x.id !== m.id)
+  .every(x => aprobadas.includes(x.id));
+
     if(String(p).includes("|")){
       return p.split("|").some(x=>aprobadas.includes(Number(x)));
     }
