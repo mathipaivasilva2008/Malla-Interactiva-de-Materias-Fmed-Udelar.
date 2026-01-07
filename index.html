@@ -2,170 +2,216 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Malla Medicina – Udelar</title>
-
+<title>Malla Curricular – Doctor en Medicina</title>
 <style>
-body{
-  font-family: Arial, sans-serif;
-  background:#0f172a;
-  color:#e5e7eb;
-  padding:20px;
-}
-h1{text-align:center}
-h2{border-bottom:2px solid #38bdf8;margin-top:30px}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:12px;
-}
-.uc{
-  background:#1e293b;
-  padding:12px;
-  border-radius:10px;
-  cursor:pointer;
-  transition:.2s;
-}
-.uc:hover{background:#334155}
-.uc.locked{
-  opacity:.35;
-  cursor:not-allowed;
-}
-.uc.unlocked{
-  border:2px solid #38bdf8;
-}
-.uc.approved{
-  background:#14532d;
-  border:2px solid #4ade80;
-}
-.credits{color:#93c5fd;font-size:14px}
-.lock{font-size:13px;color:#cbd5f5}
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+    }
 
-#total{
-  text-align:center;
-  font-size:18px;
-  margin-bottom:20px;
-}
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    .column {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .column h2 {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #4a6fa5;
+    }
+
+    .column h3 {
+        font-size: 15px;
+        margin: 10px 0 5px;
+        color: #666;
+    }
+
+    .uc {
+        background: #e9eef5;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+    }
+
+    .uc:hover {
+        background: #dde6f2;
+    }
+
+    .uc.approved {
+        background: #cfe8d9;
+        text-decoration: line-through;
+        color: #2f6f4f;
+    }
+
+    .uc.locked {
+        background: #f1f1f1;
+        color: #999;
+        cursor: not-allowed;
+    }
+
+    .uc.locked:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 6px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        white-space: pre-line;
+        z-index: 10;
+    }
 </style>
 </head>
-
 <body>
 
-<h1>Malla Medicina – Facultad de Medicina (Udelar)</h1>
-<div id="total"></div>
+<h1>Malla Curricular – Doctor en Medicina</h1>
 
-<div id="malla"></div>
+<div class="grid" id="grid"></div>
 
 <script>
-const ucs = [
-  // PRIMER AÑO – PRIMER SEMESTRE
-  {id:"UC1",nombre:"UC 1 – Introducción a la Biología Celular y Molecular",cred:10,previa:"6º CVH"},
-  {id:"UC2",nombre:"UC 2 – Introducción a la Bioestadística",cred:5,previa:"6º CVH"},
-  {id:"UC3",nombre:"UC 3 – Salud Pública y Humanidades e Introducción a la Bioética",cred:11,previa:"6º CVH"},
-  {id:"UC4",nombre:"UC 4 – Aprendizaje en Territorio 1",cred:14,previa:"6º CVH"},
+const materias = [
+    { id:"UC1", nombre:"UC 1 Introducción a la Biología Celular y Molecular", previas:[] },
+    { id:"UC2", nombre:"UC 2 Introducción a la Bioestadística", previas:[] },
+    { id:"UC3", nombre:"UC 3 Salud Pública y Humanidades e Introducción a la Bioética", previas:[] },
+    { id:"UC4", nombre:"UC 4 Aprendizaje en Territorio 1", previas:[] },
 
-  // PRIMER AÑO – SEGUNDO SEMESTRE
-  {id:"UC5",nombre:"UC 5 – Biología Celular y Molecular",cred:37,req:["UC1"]},
-  {id:"UC6",nombre:"UC 6 – Aprendizaje en Territorio 2",cred:8,req:["UC4"]},
+    { id:"UC5", nombre:"UC 5 Biología Celular y Molecular", previas:["UC1"] },
+    { id:"UC6", nombre:"UC 6 Aprendizaje en Territorio 2", previas:["UC4"] },
 
-  // SEGUNDO AÑO – PRIMER SEMESTRE
-  {id:"UC7",nombre:"UC 7 – Anatomía Clínica y Bioética",cred:34,req:["UC3"]},
-  {id:"UC8",nombre:"UC 8 – Histología General - Biofísica del Músculo y la Locomoción",cred:11,req:["UC5"]},
+    { id:"UC7", nombre:"UC 7 Anatomía Clínica y Bioética", previas:["UC3"] },
+    { id:"UC8", nombre:"UC 8 Histología General - Biofísica del Músculo y la Locomoción", previas:["UC5"] },
 
-  // SEGUNDO AÑO – SEGUNDO SEMESTRE
-  {id:"UC9",nombre:"UC 9 – Histología de Neuro, Cardio y Respiratorio",cred:6,req:["UC5"]},
-  {id:"UC10",nombre:"UC 10 – Neurociencias",cred:21,req:["UC5"]},
-  {id:"UC11",nombre:"UC 11 – Cardiovascular y Respiratorio",cred:18,req:["UC5"]},
+    { id:"UC9", nombre:"UC 9 Histología de Neuro, Cardio y Respiratorio", previas:["UC5"] },
+    { id:"UC10", nombre:"UC 10 Neurociencias", previas:["UC5"] },
+    { id:"UC11", nombre:"UC 11 Cardiovascular y Respiratorio", previas:["UC5"] },
 
-  // TERCER AÑO – PRIMER SEMESTRE
-  {id:"UC12",nombre:"UC 12 – Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo",cred:45,req:["UC5","UC7"]},
+    { id:"UC12", nombre:"UC 12 Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo", previas:["UC5","UC7"] },
 
-  // TERCER AÑO – SEGUNDO SEMESTRE
-  {id:"UC13",nombre:"UC 13 – Hematología e Inmunología",cred:27,req:["UC5"]},
-  {id:"UC14",nombre:"UC 14 – Metodología Científica 1",cred:18,special:["UC2", "UC12"]},
+    { id:"UC13", nombre:"UC 13 Hematología - Inmunología", previas:["UC5"] },
+    { id:"UC14", nombre:"UC 14 Metodología Científica 1", previas:["UC2","UC5|UC13"] },
 
-  // CUARTO AÑO
-  {id:"UC15",nombre:"UC 15 – Medicina en el Primer Nivel de Atención",cred:0,req:["TRIENIO"]},
-  {id:"UC16",nombre:"UC 16 – Bases Científicas de la Patología",cred:0,req:["TRIENIO"]},
-  {id:"UC17",nombre:"UC 17 – Pediatría",cred:0,req:["TRIENIO"]},
+    { id:"UC15", nombre:"UC 15 Medicina en el Primer Nivel de Atención", previas:["TRIENIO"] },
+    { id:"UC16", nombre:"UC 16 Bases Científicas de la Patología", previas:["TRIENIO"] },
+    { id:"UC17", nombre:"UC 17 Pediatría", previas:["TRIENIO"] },
 
-  // QUINTO AÑO
-  {id:"UC19",nombre:"UC 19 – Clínica Médica",cred:87,req:["UC15","UC16"]},
-  {id:"UC20",nombre:"UC 20 – Patología Médica y Terapéutica",cred:23,req:["UC16"]},
+    { id:"UC19", nombre:"UC 19 Clínica Médica", previas:["UC15","UC16"] },
+    { id:"UC20", nombre:"UC 20 Patología Médica y Terapéutica", previas:["UC16"] },
 
-  // SEXTO AÑO
-  {id:"UC18",nombre:"UC 18 – Ginecología y Neonatología",cred:0,req:["UC15","UC16"]},
-  {id:"UC21",nombre:"UC 21 – Clínica Quirúrgica",cred:0,req:["UC15","UC16"]},
-  {id:"UC22",nombre:"UC 22 – Patología Médica y Terapéutica",cred:0,req:["UC16"]},
-  {id:"UC23",nombre:"UC 23 – Medicina Familiar y Comunitaria y Salud Mental",cred:0,req:["UC15"]},
-  {id:"UC24",nombre:"UC 24 – Metodología Científica 2",cred:0,req:["UC14"]},
+    { id:"UC18", nombre:"UC 18 Ginecología y Neonatología", previas:["UC15","UC16"] },
+    { id:"UC21", nombre:"UC 21 Clínica Quirúrgica", previas:["UC15","UC16"] },
+    { id:"UC22", nombre:"UC 22 Patología Quirúrgica", previas:["UC16"] },
+    { id:"UC23", nombre:"UC 23 Medicina Familiar y Comunitaria - Salud Mental en Comunidad", previas:["UC15"] },
 
-  // INTERNADO
-  {id:"UC25",nombre:"Internado Rotatorio",cred:146,req:["TODO"]},
+    { id:"UC24", nombre:"UC 24 Metodología Científica 2", previas:["UC15","UC16","UC17|UC18|UC19|UC20|UC21|UC22|UC23"] },
 
-  // OPTATIVAS
-  {id:"OPT",nombre:"Optativas y Electivas",cred:60,manual:true}
+    { id:"UC25", nombre:"UC 25 Internado Rotatorio", previas:["ALL"] }
 ];
 
-let aprobadas = new Set(JSON.parse(localStorage.getItem("aprobadas"))||[]);
+const estructura = {
+    "Primer Año": {
+        "Primer Semestre":["UC1","UC2","UC3","UC4"],
+        "Segundo Semestre":["UC5","UC6"]
+    },
+    "Segundo Año": {
+        "Tercer Semestre":["UC7","UC8"],
+        "Cuarto Semestre":["UC9","UC10","UC11"]
+    },
+    "Tercer Año": {
+        "Quinto Semestre":["UC12"],
+        "Sexto Semestre":["UC13","UC14"]
+    },
+    "Cuarto Año": {
+        "Séptimo y Octavo Semestre":["UC15","UC16","UC17"]
+    },
+    "Quinto Año": {
+        "Noveno y Décimo Semestre":["UC19","UC20"]
+    },
+    "Sexto Año": {
+        "Onceavo y Doceavo Semestre":["UC18","UC21","UC22","UC23","UC24"]
+    },
+    "Séptimo Año": {
+        "Internado":["UC25"]
+    }
+};
 
-function primerTrienio(){
-  return ["UC1","UC2","UC3","UC4","UC5","UC6","UC7","UC8","UC9","UC10","UC11","UC12","UC13"]
-    .every(id=>aprobadas.has(id));
+let estado = JSON.parse(localStorage.getItem("estadoUC")) || {};
+
+function checkPrevias(previas) {
+    if (previas.includes("ALL")) {
+        return materias.every(m => estado[m.id]);
+    }
+    if (previas.includes("TRIENIO")) {
+        return ["UC1","UC2","UC3","UC4","UC5","UC6","UC7","UC8","UC9","UC10","UC11","UC12","UC13","UC14"]
+            .every(id => estado[id]);
+    }
+    return previas.every(p => {
+        if (p.includes("|")) {
+            return p.split("|").some(opt => estado[opt]);
+        }
+        return estado[p];
+    });
 }
 
-function alguna5a13(){
-  return ["UC5","UC6","UC7","UC8","UC9","UC10","UC11","UC12","UC13"]
-    .some(id=>aprobadas.has(id));
-}
+function render() {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
 
-function todoAprobado(){
-  return ucs.filter(u=>!u.manual).every(u=>aprobadas.has(u.id));
-}
+    for (const año in estructura) {
+        const col = document.createElement("div");
+        col.className = "column";
+        col.innerHTML = `<h2>${año}</h2>`;
 
-function desbloqueada(u){
-  if(u.special==="met1")
-    return aprobadas.has("UC2") && alguna5a13();
-  if(u.special==="met2")
-    return aprobadas.has("UC15") && aprobadas.has("UC16") &&
-           ["UC17","UC18","UC19","UC21","UC23"].some(id=>aprobadas.has(id));
-  if(!u.req) return true;
-  if(u.req.includes("TRIENIO")) return primerTrienio();
-  if(u.req.includes("TODO")) return todoAprobado();
-  return u.req.every(r=>aprobadas.has(r));
-}
+        for (const semestre in estructura[año]) {
+            col.innerHTML += `<h3>${semestre}</h3>`;
+            estructura[año][semestre].forEach(id => {
+                const m = materias.find(x => x.id === id);
+                const ok = checkPrevias(m.previas);
+                const div = document.createElement("div");
+                div.className = "uc";
+                div.textContent = m.nombre;
 
-function render(){
-  const m=document.getElementById("malla");
-  m.innerHTML="";
-  let total=0;
+                if (!ok && !estado[id]) {
+                    div.classList.add("locked");
+                    div.dataset.tooltip = "Faltan:\n" + m.previas.join(", ");
+                } else if (estado[id]) {
+                    div.classList.add("approved");
+                }
 
-  ucs.forEach(u=>{
-    const div=document.createElement("div");
-    div.className="uc";
+                div.onclick = () => {
+                    if (div.classList.contains("locked")) return;
+                    estado[id] = !estado[id];
+                    localStorage.setItem("estadoUC", JSON.stringify(estado));
+                    render();
+                };
 
-    const ok=desbloqueada(u);
-    if(!ok && !aprobadas.has(u.id)) div.classList.add("locked");
-    if(ok) div.classList.add("unlocked");
-    if(aprobadas.has(u.id)){div.classList.add("approved"); total+=u.cred;}
-
-    div.innerHTML=`
-      <strong>${u.nombre}</strong><br>
-      <span class="credits">${u.cred} créditos</span><br>
-      <span class="lock">${u.previa||""}</span>
-    `;
-
-    div.onclick=()=>{
-      if(!ok && !aprobadas.has(u.id)) return;
-      aprobadas.has(u.id)?aprobadas.delete(u.id):aprobadas.add(u.id);
-      localStorage.setItem("aprobadas",JSON.stringify([...aprobadas]));
-      render();
-    };
-
-    m.appendChild(div);
-  });
-
-  document.getElementById("total").innerText=
-    `Créditos acumulados: ${total} / 741 (+60 optativas)`;
+                col.appendChild(div);
+            });
+        }
+        grid.appendChild(col);
+    }
 }
 
 render();
@@ -173,3 +219,4 @@ render();
 
 </body>
 </html>
+
