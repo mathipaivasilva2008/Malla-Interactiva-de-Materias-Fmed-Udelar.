@@ -179,6 +179,7 @@ function checkPrevias(previas) {
     });
 }
 
+<script>
 function render() {
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
@@ -193,11 +194,11 @@ function render() {
 
             estructura[año][semestre].forEach(id => {
                 const m = materias.find(x => x.id === id);
-                const previasOK = checkPrevias(m.previas);
-
                 const div = document.createElement("div");
                 div.className = "uc";
                 div.textContent = m.nombre;
+
+                const previasOK = checkPrevias(m.previas);
 
                 if (estado[id]) {
                     div.classList.add("approved");
@@ -206,12 +207,16 @@ function render() {
                     div.dataset.tooltip = "Faltan:\n" + m.previas.join(", ");
                 }
 
-                div.onclick = () => {
-                    if (!estado[id] && !previasOK) return;
-                    estado[id] = !estado[id];
+                div.addEventListener("click", () => {
+                    // 🔥 REEVALUAMOS previas EN EL MOMENTO DEL CLICK
+                    const puedeClicarse = checkPrevias(m.previas);
+
+                    if (!estado[id] && !puedeClicarse) return;
+
+                    estado[id] = !estado[id]; // alterna aprobado / desaprobado
                     localStorage.setItem("estadoUC", JSON.stringify(estado));
                     render();
-                };
+                });
 
                 col.appendChild(div);
             });
@@ -222,6 +227,7 @@ function render() {
 
 render();
 </script>
+
 
 
 </body>
