@@ -3,95 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <title>Malla Curricular – Doctor en Medicina</title>
+
 <style>
-    body {
-        font-family: "Segoe UI", sans-serif;
-        background: #f5f7fa;
-        margin: 0;
-        padding: 20px;
-        color: #333;
-    }
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 20px;
+}
 
-    h1 {
-        text-align: center;
-        margin-bottom: 30px;
-    }
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2f4f6f;
+}
 
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 20px;
-    }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
 
-    .column {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 15px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
+.column {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
 
-    .column h2 {
-        text-align: center;
-        font-size: 18px;
-        margin-bottom: 10px;
-        color: #4a6fa5;
-    }
+.column h2 {
+    text-align: center;
+    color: #4a6fa5;
+    margin-bottom: 10px;
+}
 
-    .column h3 {
-        font-size: 15px;
-        margin: 10px 0 5px;
-        color: #666;
-    }
+.column h3 {
+    font-size: 14px;
+    margin: 10px 0 6px;
+    color: #666;
+}
 
-    .uc {
-        background: #e9eef5;
-        border-radius: 8px;
-        padding: 10px;
-        margin-bottom: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-        position: relative;
-    }
+.uc {
+    background: #e9eef5;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    position: relative;
+}
 
-    .uc:hover {
-        background: #dde6f2;
-    }
+.uc:hover {
+    background: #dde6f2;
+}
 
-    .uc.approved {
-        background: #cfe8d9;
-        text-decoration: line-through;
-        color: #2f6f4f;
-    }
+.uc.approved {
+    background: #cfe8d9;
+    color: #2f6f4f;
+    text-decoration: line-through;
+}
 
-    .uc.locked {
-        background: #f1f1f1;
-        color: #999;
-        cursor: not-allowed;
-    }
+.uc.locked {
+    background: #f1f1f1;
+    color: #999;
+    cursor: not-allowed;
+}
 
-    .uc.locked:hover::after {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: 110%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #333;
-        color: #fff;
-        padding: 6px 8px;
-        border-radius: 6px;
-        font-size: 12px;
-        white-space: pre-line;
-        z-index: 10;
-    }
+.uc.locked:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: pre-line;
+    z-index: 10;
+}
 </style>
 </head>
+
 <body>
 
-<h1>Malla Curricular – Doctor en Medicina</h1>
+<h1>Malla Curricular – Doctor en Medicina (FMED Udelar)</h1>
 
-<div class="grid" id="grid"></div>
+<div id="grid" class="grid"></div>
 
 <script>
+/* ================== DATOS ================== */
+
 const materias = [
     { id:"UC1", nombre:"UC 1 Introducción a la Biología Celular y Molecular", previas:[] },
     { id:"UC2", nombre:"UC 2 Introducción a la Bioestadística", previas:[] },
@@ -123,7 +126,7 @@ const materias = [
     { id:"UC18", nombre:"UC 18 Ginecología y Neonatología", previas:["UC15","UC16"] },
     { id:"UC21", nombre:"UC 21 Clínica Quirúrgica", previas:["UC15","UC16"] },
     { id:"UC22", nombre:"UC 22 Patología Quirúrgica", previas:["UC16"] },
-    { id:"UC23", nombre:"UC 23 Medicina Familiar y Comunitaria - Salud Mental en Comunidad", previas:["UC15"] },
+    { id:"UC23", nombre:"UC 23 Medicina Familiar y Comunitaria", previas:["UC15"] },
 
     { id:"UC24", nombre:"UC 24 Metodología Científica 2", previas:["UC15","UC16","UC17|UC18|UC19|UC20|UC21|UC22|UC23"] },
 
@@ -157,6 +160,8 @@ const estructura = {
     }
 };
 
+/* ================== LÓGICA ================== */
+
 let estado = JSON.parse(localStorage.getItem("estadoUC")) || {};
 
 function checkPrevias(previas) {
@@ -179,7 +184,6 @@ function checkPrevias(previas) {
     });
 }
 
-<script>
 function render() {
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
@@ -208,12 +212,8 @@ function render() {
                 }
 
                 div.addEventListener("click", () => {
-                    // 🔥 REEVALUAMOS previas EN EL MOMENTO DEL CLICK
-                    const puedeClicarse = checkPrevias(m.previas);
-
-                    if (!estado[id] && !puedeClicarse) return;
-
-                    estado[id] = !estado[id]; // alterna aprobado / desaprobado
+                    if (!estado[id] && !checkPrevias(m.previas)) return;
+                    estado[id] = !estado[id];
                     localStorage.setItem("estadoUC", JSON.stringify(estado));
                     render();
                 });
@@ -227,8 +227,6 @@ function render() {
 
 render();
 </script>
-
-
 
 </body>
 </html>
