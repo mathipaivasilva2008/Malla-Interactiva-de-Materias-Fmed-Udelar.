@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Malla interactiva – Medicina Udelar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+    .uc {
+      border-radius: 14px;
+      padding: 15px;
+      background: #1e293b;
+      border: 2px solid #334155;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0.35;
+    }
+    .uc.unlocked {
+      opacity: 1;
+      cursor: pointer;
+    }
+    .uc.completed {
+      background: #22c55e;
+      color: #022c22;
+      border-color: #16a34a;
+      box-shadow: 0 0 15px rgba(34,197,94,0.8);
+    }
+    .uc:hover.unlocked {
+      transform: scale(1.03);
+    }
+    .credits {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+    .lock {
+      font-size: 0.8em;
+      color: #94a3b8;
+    }
+    .optativas {
+      border: 2px dashed #64748b;
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Malla interactiva – Doctor en Medicina</h1>
+<p style="text-align:center">Click en una UC para marcarla como exonerada y desbloquear las siguientes</p>
+
+<h2>Primer Año</h2>
+<div class="grid">
+  <div class="uc unlocked" id="UC1" data-unlocks="UC5">
+    <strong>UC 1 – Introducción a la Biología Celular y Molecular</strong><br>
+    <span class="credits">10 créditos</span><br>
+    <span class="lock">Previa: 6º CVH</span>
+  </div>
+  <div class="uc unlocked" id="UC2">
+    <strong>UC 2 – Introducción a la Bioestadística</strong><br>
+    <span class="credits">5 créditos</span><br>
+    <span class="lock">Previa: 6º CVH</span>
+  </div>
+  <div class="uc unlocked" id="UC3" data-unlocks="UC7">
+    <strong>UC 3 – Salud Pública y Bioética</strong><br>
+    <span class="credits">11 créditos</span><br>
+    <span class="lock">Previa: 6º CVH</span>
+  </div>
+  <div class="uc unlocked" id="UC4" data-unlocks="UC6">
+    <strong>UC 4 – Aprendizaje en Territorio 1</strong><br>
+    <span class="credits">14 créditos</span><br>
+    <span class="lock">Previa: 6º CVH</span>
+  </div>
+
+  <div class="uc" id="UC5" data-unlocks="UC8 UC9 UC10 UC11 UC12 UC13">
+    <strong>UC 5 – Biología Celular y Molecular</strong><br>
+    <span class="credits">37 créditos</span><br>
+    <span class="lock">Previa: UC1</span>
+  </div>
+  <div class="uc" id="UC6">
+    <strong>UC 6 – Aprendizaje en Territorio 2</strong><br>
+    <span class="credits">8 créditos</span><br>
+    <span class="lock">Previa: UC4</span>
+  </div>
+</div>
+
+<h2>Segundo Año</h2>
+<div class="grid">
+  <div class="uc" id="UC7" data-unlocks="UC12">
+    <strong>UC 7 – Anatomía Clínica y Bioética</strong><br>
+    <span class="credits">34 créditos</span><br>
+    <span class="lock">Previa: UC3</span>
+  </div>
+  <div class="uc" id="UC8">
+    <strong>UC 8 – Histología General y Biofísica</strong><br>
+    <span class="credits">11 créditos</span><br>
+    <span class="lock">Previa: UC5</span>
+  </div>
+  <div class="uc" id="UC9">
+    <strong>UC 9 – Histología Neuro, Cardio y Resp.</strong><br>
+    <span class="credits">6 créditos</span><br>
+    <span class="lock">Previa: UC5</span>
+  </div>
+  <div class="uc" id="UC10">
+    <strong>UC 10 – Neurociencias</strong><br>
+    <span class="credits">21 créditos</span><br>
+    <span class="lock">Previa: UC5</span>
+  </div>
+  <div class="uc" id="UC11">
+    <strong>UC 11 – Cardiovascular y Respiratorio</strong><br>
+    <span class="credits">18 créditos</span><br>
+    <span class="lock">Previa: UC5</span>
+  </div>
+</div>
+
+<h2>Tercer Año</h2>
+<div class="grid">
+  <div class="uc" id="UC12">
+    <strong>UC 12 – Digestivo, Renal, Endocrino, etc.</strong><br>
+    <span class="credits">45 créditos</span><br>
+    <span class="lock">Previas: UC5 + UC7</span>
+  </div>
+  <div class="uc" id="UC13">
+    <strong>UC 13 – Hematología e Inmunología</strong><br>
+    <span class="credits">27 créditos</span><br>
+    <span class="lock">Previa: UC5</span>
+  </div>
+  <div class="uc" id="UC14">
+    <strong>UC 14 – Metodología Científica 1</strong><br>
+    <span class="credits">18 créditos</span><br>
+    <span class="lock">Previa: UC2 + alguna UC 5–13</span>
+  </div>
+</div>
+
+<h2>Optativas y Electivas</h2>
+<div class="optativas">
+  <strong>Optativas y Electivas</strong><br>
+  60 créditos<br>
+  (Marcado manual)
+</div>
+
+<h2>Internado</h2>
+<div class="grid">
+  <div class="uc" id="UCIR">
+    <strong>Internado Rotatorio</strong><br>
+    <span class="credits">146 créditos</span><br>
+    <span class="lock">Previa: TODA LA CARRERA APROBADA</span>
+  </div>
+</div>
+
+<script>
+  const completed = new Set();
+
+  document.querySelectorAll('.uc').forEach(uc => {
+    uc.addEventListener('click', () => {
+      if (!uc.classList.contains('unlocked')) return;
+      if (uc.classList.contains('completed')) return;
+
+      uc.classList.add('completed');
+      completed.add(uc.id);
+
+      const unlocks = uc.dataset.unlocks;
+      if (unlocks) {
+        unlocks.split(' ').forEach(id => {
+          const target = document.getElementById(id);
+          if (target) target.classList.add('unlocked');
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
