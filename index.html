@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Malla interactiva – Medicina Udelar</title>
+<title>Malla Medicina – Udelar</title>
 
 <style>
 body{
@@ -11,202 +11,164 @@ body{
   color:#e5e7eb;
   padding:20px;
 }
-h1,h2{text-align:center}
+h1{text-align:center}
+h2{border-bottom:2px solid #38bdf8;margin-top:30px}
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:15px;
-  margin-bottom:40px;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:12px;
 }
 .uc{
   background:#1e293b;
-  border:2px solid #334155;
-  border-radius:14px;
-  padding:15px;
+  padding:12px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.2s;
+}
+.uc:hover{background:#334155}
+.uc.locked{
   opacity:.35;
   cursor:not-allowed;
-  transition:.3s;
 }
 .uc.unlocked{
-  opacity:1;
-  cursor:pointer;
+  border:2px solid #38bdf8;
 }
-.uc.completed{
-  background:#22c55e;
-  color:#022c22;
-  border-color:#16a34a;
-  box-shadow:0 0 15px rgba(34,197,94,.8);
+.uc.approved{
+  background:#14532d;
+  border:2px solid #4ade80;
 }
-.uc.unlocked:hover{transform:scale(1.03)}
-.credits{font-size:.9em}
-.lock{font-size:.8em;color:#94a3b8}
+.credits{color:#93c5fd;font-size:14px}
+.lock{font-size:13px;color:#cbd5f5}
+
+#total{
+  text-align:center;
+  font-size:18px;
+  margin-bottom:20px;
+}
 </style>
 </head>
 
 <body>
 
-<h1>Malla interactiva – Doctor en Medicina</h1>
-<p style="text-align:center">Click en cada UC para aprobarla</p>
+<h1>Malla Medicina – Facultad de Medicina (Udelar)</h1>
+<div id="total"></div>
 
-<h2>Primer Año</h2>
-  <div class="grid">
-<div class="uc unlocked" id="UC1" data-unlocks="UC5">
-<strong>UC 1 – Introducción a la Biología Celular y Molecular</strong><br>
-<span class="credits">10 créditos</span><br>
-<span class="lock">Previa: 6º CVH</span>
-</div>
-<div class="uc unlocked" id="UC2">
-<strong>UC 2 – Introducción a la Bioestadística</strong><br>
-<span class="credits">5 créditos</span><br>
-<span class="lock">Previa: 6º CVH</span>
-</div>
-<div class="uc unlocked" id="UC3" data-unlocks="UC7">
-<strong>UC 3 – Salud Pública y Humanidades e Introducción a la Bioética</strong><br>
-<span class="credits">11 créditos</span><br>
-<span class="lock">Previa: 6º CVH</span>
-</div>
-<div class="uc unlocked" id="UC4" data-unlocks="UC6">
-<strong>UC 4 – Aprendizaje en Territorio 1</strong><br>
-<span class="credits">14 créditos</span><br>
-<span class="lock">Previa: 6º CVH</span>
-</div>
-
-
-<div class="uc" id="UC5" data-unlocks="UC8 UC9 UC10 UC11 UC12 UC13">
-<strong>UC 5 – Biología Celular y Molecular</strong><br>
-<span class="credits">37 créditos</span><br>
-<span class="lock">Previa: UC1</span>
-</div>
-<div class="uc" id="UC6">
-<strong>UC 6 – Aprendizaje en Territorio 2</strong><br>
-<span class="credits">8 créditos</span><br>
-<span class="lock">Previa: UC4</span>
-</div>
-</div>
-
-
-<h2>Segundo Año</h2>
-<div class="grid">
-<div class="uc" id="UC7" data-unlocks="UC12">
-<strong>UC 7 – Anatomía Clínica y Bioética</strong><br>
-<span class="credits">34 créditos</span><br>
-<span class="lock">Previa: UC3</span>
-</div>
-<div class="uc" id="UC8">
-<strong>UC 8 – Histología General y Biofísica</strong><br>
-<span class="credits">11 créditos</span><br>
-<span class="lock">Previa: UC5</span>
-</div>
-<div class="uc" id="UC9">
-<strong>UC 9 – Histología Neuro, Cardio y Resp.</strong><br>
-<span class="credits">6 créditos</span><br>
-<span class="lock">Previa: UC5</span>
-</div>
-<div class="uc" id="UC10">
-<strong>UC 10 – Neurociencias</strong><br>
-<span class="credits">21 créditos</span><br>
-<span class="lock">Previa: UC5</span>
-</div>
-<div class="uc" id="UC11">
-<strong>UC 11 – Cardiovascular y Respiratorio</strong><br>
-<span class="credits">18 créditos</span><br>
-<span class="lock">Previa: UC5</span>
-</div>
-</div>
-
-
-<h2>Tercer Año</h2>
-<div class="grid">
-<div class="uc" id="UC12">
-<strong>UC 12 – Digestivo, Renal, Endocrino, etc.</strong><br>
-<span class="credits">45 créditos</span><br>
-<span class="lock">Previas: UC5 + UC7</span>
-</div>
-<div class="uc" id="UC13">
-<strong>UC 13 – Hematología e Inmunología</strong><br>
-<span class="credits">27 créditos</span><br>
-<span class="lock">Previa: UC5</span>
-</div>
-  <div class="uc" id="UC14">UC14 – Metodología Científica 1</div>
-  <span class="credits">18 créditos</span><br>
-  <span class="lock">Previas: UC2 + UC11</span>
-</div>
-
-<h2>Cuarto Año</h2>
-<div class="grid">
-  </div>
-<div class="uc" id="UC15">
-  <div class="uc cuarto" id="UC15">UC15 – Medicina en el Primer Nivel de Atención </div>
-  
-  <div class="uc cuarto" id="UC16">UC16 – Bases Científicas de la Patología</div>
-  <div class="uc cuarto" id="UC17">UC17 – Pediatría</div>
-</div>
-
-<h2>Quinto Año</h2>
-<div class="grid">
-  <div class="uc quinto" id="UC19">UC19 – Clínica Médica</div>
-  <div class="uc quinto" id="UC20">UC20 – Patología Médica</div>
-</div>
-
-<h2>Sexto Año</h2>
-<div class="grid">
-  <div class="uc sexto" id="UC18">UC18 – Gineco</div>
-  <div class="uc sexto" id="UC21">UC21 – Quirúrgica</div>
-  <div class="uc sexto" id="UC22">UC22 – Patología</div>
-  <div class="uc sexto" id="UC23">UC23 – MFyC</div>
-  <div class="uc sexto" id="UC24">UC24 – Metodología 2</div>
-</div>
+<div id="malla"></div>
 
 <script>
-const completed = new Set();
+const ucs = [
+  // PRIMER AÑO – PRIMER SEMESTRE
+  {id:"UC1",nombre:"UC 1 – Introducción a la Biología Celular y Molecular",cred:10,previa:"6º CVH"},
+  {id:"UC2",nombre:"UC 2 – Introducción a la Bioestadística",cred:5,previa:"6º CVH"},
+  {id:"UC3",nombre:"UC 3 – Salud Pública y Humanidades e Introducción a la Bioética",cred:11,previa:"6º CVH"},
+  {id:"UC4",nombre:"UC 4 – Aprendizaje en Territorio 1",cred:14,previa:"6º CVH"},
 
-document.querySelectorAll('.uc').forEach(uc=>{
-  uc.addEventListener('click',()=>{
-    if(!uc.classList.contains('unlocked')) return;
-    if(uc.classList.contains('completed')) return;
+  // PRIMER AÑO – SEGUNDO SEMESTRE
+  {id:"UC5",nombre:"UC 5 – Biología Celular y Molecular",cred:37,req:["UC1"]},
+  {id:"UC6",nombre:"UC 6 – Aprendizaje en Territorio 2",cred:8,req:["UC4"]},
 
-    uc.classList.add('completed');
-    completed.add(uc.id);
+  // SEGUNDO AÑO – PRIMER SEMESTRE
+  {id:"UC7",nombre:"UC 7 – Anatomía Clínica y Bioética",cred:34,req:["UC3"]},
+  {id:"UC8",nombre:"UC 8 – Histología General - Biofísica del Músculo y la Locomoción",cred:11,req:["UC5"]},
 
-    if(uc.dataset.unlocks){
-      uc.dataset.unlocks.split(' ').forEach(id=>{
-        document.getElementById(id)?.classList.add('unlocked');
-      });
-    }
+  // SEGUNDO AÑO – SEGUNDO SEMESTRE
+  {id:"UC9",nombre:"UC 9 – Histología de Neuro, Cardio y Respiratorio",cred:6,req:["UC5"]},
+  {id:"UC10",nombre:"UC 10 – Neurociencias",cred:21,req:["UC5"]},
+  {id:"UC11",nombre:"UC 11 – Cardiovascular y Respiratorio",cred:18,req:["UC5"]},
 
-    evaluar();
-  });
-});
+  // TERCER AÑO – PRIMER SEMESTRE
+  {id:"UC12",nombre:"UC 12 – Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo",cred:45,req:["UC5","UC7"]},
 
-function evaluar(){
+  // TERCER AÑO – SEGUNDO SEMESTRE
+  {id:"UC13",nombre:"UC 13 – Hematología e Inmunología",cred:27,req:["UC5"]},
+  {id:"UC14",nombre:"UC 14 – Metodología Científica 1",cred:18,special:["UC2", "UC12"]},
 
-  // UC14
-  const tieneIBES = completed.has('UC2');
-  const alguna513 = [...completed].some(id =>
-    /^UC([5-9]|1[0-3])$/.test(id)
-  );
+  // CUARTO AÑO
+  {id:"UC15",nombre:"UC 15 – Medicina en el Primer Nivel de Atención",cred:0,req:["TRIENIO"]},
+  {id:"UC16",nombre:"UC 16 – Bases Científicas de la Patología",cred:0,req:["TRIENIO"]},
+  {id:"UC17",nombre:"UC 17 – Pediatría",cred:0,req:["TRIENIO"]},
 
-  if(tieneIBES && alguna513){
-    document.getElementById('UC14').classList.add('unlocked');
-  }
+  // QUINTO AÑO
+  {id:"UC19",nombre:"UC 19 – Clínica Médica",cred:87,req:["UC15","UC16"]},
+  {id:"UC20",nombre:"UC 20 – Patología Médica y Terapéutica",cred:23,req:["UC16"]},
 
-  // Primer Trienio
-  const trienio = [
-    'UC1','UC2','UC3','UC4','UC5','UC6',
-    'UC7','UC8','UC9','UC10','UC11',
-    'UC12','UC13','UC14'
-  ].every(id => completed.has(id));
+  // SEXTO AÑO
+  {id:"UC18",nombre:"UC 18 – Ginecología y Neonatología",cred:0,req:["UC15","UC16"]},
+  {id:"UC21",nombre:"UC 21 – Clínica Quirúrgica",cred:0,req:["UC15","UC16"]},
+  {id:"UC22",nombre:"UC 22 – Patología Médica y Terapéutica",cred:0,req:["UC16"]},
+  {id:"UC23",nombre:"UC 23 – Medicina Familiar y Comunitaria y Salud Mental",cred:0,req:["UC15"]},
+  {id:"UC24",nombre:"UC 24 – Metodología Científica 2",cred:0,req:["UC14"]},
 
-  if(trienio){
-    document.querySelectorAll('.cuarto').forEach(u=>u.classList.add('unlocked'));
-  }
+  // INTERNADO
+  {id:"UC25",nombre:"Internado Rotatorio",cred:146,req:["TODO"]},
 
-  // 5° y 6°
-  if(completed.has('UC15') && completed.has('UC16')){
-    document.querySelectorAll('.quinto,.sexto')
-      .forEach(u=>u.classList.add('unlocked'));
-  }
+  // OPTATIVAS
+  {id:"OPT",nombre:"Optativas y Electivas",cred:60,manual:true}
+];
+
+let aprobadas = new Set(JSON.parse(localStorage.getItem("aprobadas"))||[]);
+
+function primerTrienio(){
+  return ["UC1","UC2","UC3","UC4","UC5","UC6","UC7","UC8","UC9","UC10","UC11","UC12","UC13"]
+    .every(id=>aprobadas.has(id));
 }
+
+function alguna5a13(){
+  return ["UC5","UC6","UC7","UC8","UC9","UC10","UC11","UC12","UC13"]
+    .some(id=>aprobadas.has(id));
+}
+
+function todoAprobado(){
+  return ucs.filter(u=>!u.manual).every(u=>aprobadas.has(u.id));
+}
+
+function desbloqueada(u){
+  if(u.special==="met1")
+    return aprobadas.has("UC2") && alguna5a13();
+  if(u.special==="met2")
+    return aprobadas.has("UC15") && aprobadas.has("UC16") &&
+           ["UC17","UC18","UC19","UC21","UC23"].some(id=>aprobadas.has(id));
+  if(!u.req) return true;
+  if(u.req.includes("TRIENIO")) return primerTrienio();
+  if(u.req.includes("TODO")) return todoAprobado();
+  return u.req.every(r=>aprobadas.has(r));
+}
+
+function render(){
+  const m=document.getElementById("malla");
+  m.innerHTML="";
+  let total=0;
+
+  ucs.forEach(u=>{
+    const div=document.createElement("div");
+    div.className="uc";
+
+    const ok=desbloqueada(u);
+    if(!ok && !aprobadas.has(u.id)) div.classList.add("locked");
+    if(ok) div.classList.add("unlocked");
+    if(aprobadas.has(u.id)){div.classList.add("approved"); total+=u.cred;}
+
+    div.innerHTML=`
+      <strong>${u.nombre}</strong><br>
+      <span class="credits">${u.cred} créditos</span><br>
+      <span class="lock">${u.previa||""}</span>
+    `;
+
+    div.onclick=()=>{
+      if(!ok && !aprobadas.has(u.id)) return;
+      aprobadas.has(u.id)?aprobadas.delete(u.id):aprobadas.add(u.id);
+      localStorage.setItem("aprobadas",JSON.stringify([...aprobadas]));
+      render();
+    };
+
+    m.appendChild(div);
+  });
+
+  document.getElementById("total").innerText=
+    `Créditos acumulados: ${total} / 741 (+60 optativas)`;
+}
+
+render();
 </script>
 
 </body>
