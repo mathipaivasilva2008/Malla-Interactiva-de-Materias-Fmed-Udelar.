@@ -43,10 +43,9 @@ h1{
   top:16px;
   left:16px;
   width:75px;
-  opacity:0.95;
 }
 
-/* GRID CONTENEDORA */
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
@@ -59,7 +58,7 @@ h1{
   overflow:hidden;
 }
 
-/* CADUCEO DE FONDO */
+/* CADUCEO */
 .bg-caduceo{
   position:absolute;
   bottom:40px;
@@ -83,7 +82,21 @@ h1{
 .column h2{
   text-align:center;
   font-size:1.1rem;
-  margin-bottom:10px;
+  margin-bottom:6px;
+}
+
+/* SEMESTRES */
+.semestre{
+  margin-top:10px;
+  padding-top:6px;
+  border-top:1px dashed #d1d5db;
+}
+
+.semestre h3{
+  text-align:center;
+  font-size:.9rem;
+  color:var(--muted);
+  margin:6px 0 8px;
 }
 
 /* UCS */
@@ -105,9 +118,7 @@ h1{
   cursor:not-allowed;
 }
 
-.uc:hover:not(.locked){
-  transform:scale(1.02);
-}
+.uc:hover:not(.locked){ transform:scale(1.02); }
 
 /* TOOLTIP */
 .tooltip{
@@ -140,7 +151,7 @@ h1{
 
 <body>
 
-<img src="escudo-fmed.png" alt="Escudo Facultad de Medicina" class="logo-fmed">
+<img src="escudo-fmed.png" class="logo-fmed" alt="Escudo FMed">
 
 <h1>Malla Curricular – Doctor en Medicina</h1>
 
@@ -182,13 +193,31 @@ const materias = [
 ];
 
 const columnas = [
-  {titulo:"Primer Año",ucs:[1,2,3,4,5,6]},
-  {titulo:"Segundo Año",ucs:[7,8,9,10,11]},
-  {titulo:"Tercer Año",ucs:[12,13,14]},
-  {titulo:"Cuarto Año",ucs:[15,16,17]},
-  {titulo:"Quinto Año",ucs:[19,20]},
-  {titulo:"Sexto Año",ucs:[18,21,22,23,24]},
-  {titulo:"Séptimo Año",ucs:[25]}
+  {
+    titulo:"Primer Año",
+    semestres:{
+      "Semestre 1":[1,2,3,4],
+      "Semestre 2":[5,6]
+    }
+  },
+  {
+    titulo:"Segundo Año",
+    semestres:{
+      "Semestre 1":[7,8],
+      "Semestre 2":[9,10,11]
+    }
+  },
+  {
+    titulo:"Tercer Año",
+    semestres:{
+      "Semestre 1":[12,13],
+      "Semestre 2":[14]
+    }
+  },
+  {titulo:"Cuarto Año", ucs:[15,16,17]},
+  {titulo:"Quinto Año", ucs:[19,20]},
+  {titulo:"Sexto Año", ucs:[18,21,22,23,24]},
+  {titulo:"Séptimo Año", ucs:[25]}
 ];
 
 let aprobadas = JSON.parse(localStorage.getItem("aprobadas")||"[]");
@@ -212,37 +241,51 @@ function render(){
     div.className="column";
     div.innerHTML=`<h2>${col.titulo}</h2>`;
 
-    col.ucs.forEach(id=>{
-      const m=materias.find(x=>x.id===id);
-      const ok=tienePrevias(m);
-      const aprobado=aprobadas.includes(id);
+    if(col.semestres){
+      Object.entries(col.semestres).forEach(([nom,lista])=>{
+        const s=document.createElement("div");
+        s.className="semestre";
+        s.innerHTML=`<h3>${nom}</h3>`;
 
-      const uc=document.createElement("div");
-      uc.className=`uc ciclo-${m.ciclo} ${aprobado?"approved":ok?"unlocked":"locked"}`;
-      uc.textContent=m.nombre;
+        lista.forEach(id=>agregarUC(id,s));
+        div.appendChild(s);
+      });
+    }else{
+      col.ucs.forEach(id=>agregarUC(id,div));
+    }
 
-      if(!ok){
-        const tt=document.createElement("div");
-        tt.className="tooltip";
-        tt.textContent="Tiene previas pendientes";
-        uc.appendChild(tt);
-      }
-
-      uc.onclick=()=>{
-        if(!ok) return;
-        aprobado ? aprobadas=aprobadas.filter(x=>x!==id) : aprobadas.push(id);
-        localStorage.setItem("aprobadas",JSON.stringify(aprobadas));
-        render();
-      };
-
-      div.appendChild(uc);
-    });
     cont.appendChild(div);
   });
 }
+
+function agregarUC(id, cont){
+  const m=materias.find(x=>x.id===id);
+  const ok=tienePrevias(m);
+  const aprobado=aprobadas.includes(id);
+
+  const uc=document.createElement("div");
+  uc.className=`uc ciclo-${m.ciclo} ${aprobado?"approved":ok?"unlocked":"locked"}`;
+  uc.textContent=m.nombre;
+
+  if(!ok){
+    const tt=document.createElement("div");
+    tt.className="tooltip";
+    tt.textContent="Tiene previas pendientes";
+    uc.appendChild(tt);
+  }
+
+  uc.onclick=()=>{
+    if(!ok) return;
+    aprobado ? aprobadas=aprobadas.filter(x=>x!==id) : aprobadas.push(id);
+    localStorage.setItem("aprobadas",JSON.stringify(aprobadas));
+    render();
+  };
+
+  cont.appendChild(uc);
+}
+
 render();
 </script>
 
 </body>
 </html>
-
