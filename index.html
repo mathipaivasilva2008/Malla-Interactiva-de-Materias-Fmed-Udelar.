@@ -8,20 +8,11 @@
 :root{
   --bg:#f5f7fb;
   --card:#ffffff;
-  --primary:#4f7cff;
   --approved:#9be7c4;
   --locked:#e5e7eb;
   --text:#1f2937;
   --muted:#6b7280;
 }
-
-.ciclo-intro { border-left: 6px solid #60a5fa; }
-.ciclo-basico { border-left: 6px solid #34d399; }
-.ciclo-metodo1 { border-left: 6px solid #fbbf24; }
-.ciclo-mgi-intro { border-left: 6px solid #a78bfa; }
-.ciclo-clinico { border-left: 6px solid #fb7185; }
-.ciclo-metodo2 { border-left: 6px solid #f97316; }
-.ciclo-internado { border-left: 6px solid #22d3ee; }
 
 *{box-sizing:border-box}
 
@@ -34,7 +25,7 @@ body{
 
 h1{
   text-align:center;
-  margin:28px 0 10px;
+  margin:30px 0 10px;
 }
 
 /* LOGO */
@@ -45,7 +36,7 @@ h1{
   width:75px;
 }
 
-/* GRID */
+/* GRID GENERAL */
 .grid{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
@@ -71,7 +62,7 @@ h1{
 
 /* COLUMNAS */
 .column{
-  background:var(--card);
+  background:#fff;
   border-radius:14px;
   padding:15px;
   box-shadow:0 6px 20px rgba(0,0,0,.06);
@@ -87,7 +78,7 @@ h1{
 
 /* SEMESTRES */
 .semestre{
-  margin-top:10px;
+  margin-top:12px;
   padding-top:6px;
   border-top:1px dashed #d1d5db;
 }
@@ -105,39 +96,20 @@ h1{
   border-radius:10px;
   margin-bottom:8px;
   cursor:pointer;
-  position:relative;
   transition:.2s;
 }
 
 .uc.approved{ background:var(--approved); }
 .uc.unlocked{ background:#eef3ff; }
-
 .uc.locked{
   background:var(--locked);
   color:var(--muted);
   cursor:not-allowed;
 }
 
-.uc:hover:not(.locked){ transform:scale(1.02); }
-
-/* TOOLTIP */
-.tooltip{
-  display:none;
-  position:absolute;
-  bottom:110%;
-  left:50%;
-  transform:translateX(-50%);
-  background:#111827;
-  color:white;
-  padding:6px 8px;
-  border-radius:6px;
-  font-size:.75rem;
-  max-width:220px;
-  text-align:center;
-  z-index:10;
+.uc:hover:not(.locked){
+  transform:scale(1.02);
 }
-
-.uc.locked:hover .tooltip{ display:block; }
 
 /* FIRMA */
 .footer{
@@ -165,31 +137,31 @@ h1{
 
 <script>
 const materias = [
-  {id:1,nombre:"UC 1 Introducción a la Biología Celular y Molecular",previas:[], ciclo:"intro"},
-  {id:2,nombre:"UC 2 Introducción a la Bioestadística",previas:[], ciclo:"intro"},
-  {id:3,nombre:"UC 3 Salud Pública y Humanidades e Introducción a la Bioética",previas:[], ciclo:"intro"},
-  {id:4,nombre:"UC 4 Aprendizaje en Territorio 1",previas:[], ciclo:"intro"},
-  {id:5,nombre:"UC 5 Biología Celular y Molecular",previas:[1], ciclo:"basico"},
-  {id:6,nombre:"UC 6 Aprendizaje en Territorio 2",previas:[4], ciclo:"basico"},
-  {id:7,nombre:"UC 7 Anatomía Clínica y Bioética",previas:[3], ciclo:"basico"},
-  {id:8,nombre:"UC 8 Histología General - Biofísica del Músculo y la Locomoción",previas:[5], ciclo:"basico"},
-  {id:9,nombre:"UC 9 Histología Neuro, Cardio y Respiratorio",previas:[5], ciclo:"basico"},
-  {id:10,nombre:"UC 10 Neurociencias",previas:[5], ciclo:"basico"},
-  {id:11,nombre:"UC 11 Cardiovascular y Respiratorio",previas:[5], ciclo:"basico"},
-  {id:12,nombre:"UC 12 Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo",previas:[5,7], ciclo:"basico"},
-  {id:13,nombre:"UC 13 Hematología - Inmunología",previas:[5], ciclo:"basico"},
-  {id:14,nombre:"UC 14 Metodología Científica 1",previas:["2","5|13"], ciclo:"metodo1"},
-  {id:15,nombre:"UC 15 Medicina en el Primer Nivel de Atención",previas:["TRIENIO"], ciclo:"mgi-intro"},
-  {id:16,nombre:"UC 16 Bases Científicas de la Patología",previas:["TRIENIO"], ciclo:"mgi-intro"},
-  {id:17,nombre:"UC 17 Pediatría",previas:["TRIENIO"], ciclo:"clinico"},
-  {id:18,nombre:"UC 18 Ginecología y Neonatología",previas:[15,16], ciclo:"clinico"},
-  {id:19,nombre:"UC 19 Clínica Médica",previas:[15,16], ciclo:"clinico"},
-  {id:20,nombre:"UC 20 Patología Médica y Terapéutica",previas:[16], ciclo:"clinico"},
-  {id:21,nombre:"UC 21 Clínica Quirúrgica",previas:[15,16], ciclo:"clinico"},
-  {id:22,nombre:"UC 22 Patología Quirúrgica",previas:[16], ciclo:"clinico"},
-  {id:23,nombre:"UC 23 Medicina Familiar y Comunitaria y Salud Mental",previas:[15], ciclo:"clinico"},
-  {id:24,nombre:"UC 24 Metodología Científica 2",previas:[15,16,"17|23"], ciclo:"metodo2"},
-  {id:25,nombre:"UC 25 Internado Rotatorio",previas:["ALL"], ciclo:"internado"}
+  {id:1,nombre:"UC 1 Introducción a la Biología Celular y Molecular",previas:[]},
+  {id:2,nombre:"UC 2 Introducción a la Bioestadística",previas:[]},
+  {id:3,nombre:"UC 3 Salud Pública y Humanidades e Introducción a la Bioética",previas:[]},
+  {id:4,nombre:"UC 4 Aprendizaje en Territorio 1",previas:[]},
+  {id:5,nombre:"UC 5 Biología Celular y Molecular",previas:[1]},
+  {id:6,nombre:"UC 6 Aprendizaje en Territorio 2",previas:[4]},
+  {id:7,nombre:"UC 7 Anatomía Clínica y Bioética",previas:[3]},
+  {id:8,nombre:"UC 8 Histología General - Biofísica del Músculo y la Locomoción",previas:[5]},
+  {id:9,nombre:"UC 9 Histología Neuro, Cardio y Respiratorio",previas:[5]},
+  {id:10,nombre:"UC 10 Neurociencias",previas:[5]},
+  {id:11,nombre:"UC 11 Cardiovascular y Respiratorio",previas:[5]},
+  {id:12,nombre:"UC 12 Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo",previas:[5,7]},
+  {id:13,nombre:"UC 13 Hematología - Inmunología",previas:[5]},
+  {id:14,nombre:"UC 14 Metodología Científica 1",previas:["2","5|13"]},
+  {id:15,nombre:"UC 15 Medicina en el Primer Nivel de Atención",previas:["TRIENIO"]},
+  {id:16,nombre:"UC 16 Bases Científicas de la Patología",previas:["TRIENIO"]},
+  {id:17,nombre:"UC 17 Pediatría",previas:["TRIENIO"]},
+  {id:18,nombre:"UC 18 Ginecología y Neonatología",previas:[15,16]},
+  {id:19,nombre:"UC 19 Clínica Médica",previas:[15,16]},
+  {id:20,nombre:"UC 20 Patología Médica y Terapéutica",previas:[16]},
+  {id:21,nombre:"UC 21 Clínica Quirúrgica",previas:[15,16]},
+  {id:22,nombre:"UC 22 Patología Quirúrgica",previas:[16]},
+  {id:23,nombre:"UC 23 Medicina Familiar y Comunitaria y Salud Mental",previas:[15]},
+  {id:24,nombre:"UC 24 Metodología Científica 2",previas:[15,16,"17|23"]},
+  {id:25,nombre:"UC 25 Internado Rotatorio",previas:["ALL"]}
 ];
 
 const columnas = [
@@ -214,10 +186,10 @@ const columnas = [
       "Semestre 2":[13,14]
     }
   },
-  {titulo:"Cuarto Año", ucs:[15,16,17]},
-  {titulo:"Quinto Año", ucs:[19,20]},
-  {titulo:"Sexto Año", ucs:[18,21,22,23,24]},
-  {titulo:"Séptimo Año", ucs:[25]}
+  { titulo:"Cuarto Año", semestres:{ "Anual":[15,16,17] } },
+  { titulo:"Quinto Año", semestres:{ "Anual":[19,20] } },
+  { titulo:"Sexto Año", semestres:{ "Anual":[18,21,22,23,24] } },
+  { titulo:"Séptimo Año", semestres:{ "Anual":[25] } }
 ];
 
 let aprobadas = JSON.parse(localStorage.getItem("aprobadas")||"[]");
@@ -234,54 +206,42 @@ function tienePrevias(m){
 
 function render(){
   const cont=document.getElementById("malla");
-  cont.innerHTML=`<img src="caduceo.png" class="bg-caduceo" alt="">`;
+  cont.innerHTML=`<img src="caduceo.png" class="bg-caduceo">`;
 
   columnas.forEach(col=>{
     const div=document.createElement("div");
     div.className="column";
     div.innerHTML=`<h2>${col.titulo}</h2>`;
 
-    if(col.semestres){
-      Object.entries(col.semestres).forEach(([nom,lista])=>{
-        const s=document.createElement("div");
-        s.className="semestre";
-        s.innerHTML=`<h3>${nom}</h3>`;
+    Object.entries(col.semestres).forEach(([nom,lista])=>{
+      const s=document.createElement("div");
+      s.className="semestre";
+      s.innerHTML=`<h3>${nom}</h3>`;
 
-        lista.forEach(id=>agregarUC(id,s));
-        div.appendChild(s);
+      lista.forEach(id=>{
+        const m=materias.find(x=>x.id===id);
+        const ok=tienePrevias(m);
+        const aprobado=aprobadas.includes(id);
+
+        const uc=document.createElement("div");
+        uc.className=`uc ${aprobado?"approved":ok?"unlocked":"locked"}`;
+        uc.textContent=m.nombre;
+
+        uc.onclick=()=>{
+          if(!ok) return;
+          aprobado ? aprobadas=aprobadas.filter(x=>x!==id) : aprobadas.push(id);
+          localStorage.setItem("aprobadas",JSON.stringify(aprobadas));
+          render();
+        };
+
+        s.appendChild(uc);
       });
-    }else{
-      col.ucs.forEach(id=>agregarUC(id,div));
-    }
+
+      div.appendChild(s);
+    });
 
     cont.appendChild(div);
   });
-}
-
-function agregarUC(id, cont){
-  const m=materias.find(x=>x.id===id);
-  const ok=tienePrevias(m);
-  const aprobado=aprobadas.includes(id);
-
-  const uc=document.createElement("div");
-  uc.className=`uc ciclo-${m.ciclo} ${aprobado?"approved":ok?"unlocked":"locked"}`;
-  uc.textContent=m.nombre;
-
-  if(!ok){
-    const tt=document.createElement("div");
-    tt.className="tooltip";
-    tt.textContent="Tiene previas pendientes";
-    uc.appendChild(tt);
-  }
-
-  uc.onclick=()=>{
-    if(!ok) return;
-    aprobado ? aprobadas=aprobadas.filter(x=>x!==id) : aprobadas.push(id);
-    localStorage.setItem("aprobadas",JSON.stringify(aprobadas));
-    render();
-  };
-
-  cont.appendChild(uc);
 }
 
 render();
