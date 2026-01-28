@@ -237,7 +237,7 @@ function render(){
         const aprobado=aprobadas.includes(id);
 
         const uc=document.createElement("div");
-        uc.className=`uc ${aprobado?"approved":ok?"unlocked":"locked"}`;
+        uc.className = `uc ${m.ciclo} ${aprobado?"approved":ok?"unlocked":"locked"}`;
         uc.textContent=m.nombre;
 
         uc.onclick=()=>{
