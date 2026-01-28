@@ -145,32 +145,37 @@ h1{
 
 <script>
 const materias = [
-  {id:1,nombre:"UC 1 Introducción a la Biología Celular y Molecular",previas:[]},
-  {id:2,nombre:"UC 2 Introducción a la Bioestadística",previas:[]},
-  {id:3,nombre:"UC 3 Salud Pública y Humanidades e Introducción a la Bioética",previas:[]},
-  {id:4,nombre:"UC 4 Aprendizaje en Territorio 1",previas:[]},
-  {id:5,nombre:"UC 5 Biología Celular y Molecular",previas:[1]},
-  {id:6,nombre:"UC 6 Aprendizaje en Territorio 2",previas:[4]},
-  {id:7,nombre:"UC 7 Anatomía Clínica y Bioética",previas:[3]},
-  {id:8,nombre:"UC 8 Histología General - Biofísica del Músculo y la Locomoción",previas:[5]},
-  {id:9,nombre:"UC 9 Histología Neuro, Cardio y Respiratorio",previas:[5]},
-  {id:10,nombre:"UC 10 Neurociencias",previas:[5]},
-  {id:11,nombre:"UC 11 Cardiovascular y Respiratorio",previas:[5]},
-  {id:12,nombre:"UC 12 Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo",previas:[5,7]},
-  {id:13,nombre:"UC 13 Hematología - Inmunología",previas:[5]},
-  {id:14,nombre:"UC 14 Metodología Científica 1",previas:["2","5|13"]},
-  {id:15,nombre:"UC 15 Medicina en el Primer Nivel de Atención",previas:["TRIENIO"]},
-  {id:16,nombre:"UC 16 Bases Científicas de la Patología",previas:["TRIENIO"]},
-  {id:17,nombre:"UC 17 Pediatría",previas:["TRIENIO"]},
-  {id:18,nombre:"UC 18 Ginecología y Neonatología",previas:[15,16]},
-  {id:19,nombre:"UC 19 Clínica Médica",previas:[15,16]},
-  {id:20,nombre:"UC 20 Patología Médica y Terapéutica",previas:[16]},
-  {id:21,nombre:"UC 21 Clínica Quirúrgica",previas:[15,16]},
-  {id:22,nombre:"UC 22 Patología Quirúrgica",previas:[16]},
-  {id:23,nombre:"UC 23 Medicina Familiar y Comunitaria y Salud Mental",previas:[15]},
-  {id:24,nombre:"UC 24 Metodología Científica 2",previas:[15,16,"17|23"]},
-  {id:25,nombre:"UC 25 Internado Rotatorio",previas:["ALL"]}
+  {id:1,nombre:"UC 1 Introducción a la Biología Celular y Molecular",previas:[],ciclo:"ciclo-intro"},
+  {id:2,nombre:"UC 2 Introducción a la Bioestadística",previas:[],ciclo:"ciclo-intro"},
+  {id:3,nombre:"UC 3 Salud Pública y Humanidades e Introducción a la Bioética",previas:[],ciclo:"ciclo-intro"},
+  {id:4,nombre:"UC 4 Aprendizaje en Territorio 1",previas:[],ciclo:"ciclo-intro"},
+
+  {id:5,nombre:"UC 5 Biología Celular y Molecular",previas:[1],ciclo:"ciclo-basico"},
+  {id:6,nombre:"UC 6 Aprendizaje en Territorio 2",previas:[4],ciclo:"ciclo-basico"},
+  {id:7,nombre:"UC 7 Anatomía Clínica y Bioética",previas:[3],ciclo:"ciclo-basico"},
+  {id:8,nombre:"UC 8 Histología General - Biofísica del Músculo y la Locomoción",previas:[5],ciclo:"ciclo-basico"},
+  {id:9,nombre:"UC 9 Histología Neuro, Cardio y Respiratorio",previas:[5],ciclo:"ciclo-basico"},
+  {id:10,nombre:"UC 10 Neurociencias",previas:[5],ciclo:"ciclo-basico"},
+  {id:11,nombre:"UC 11 Cardiovascular y Respiratorio",previas:[5],ciclo:"ciclo-basico"},
+
+  {id:12,nombre:"UC 12 Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo",previas:[5,7],ciclo:"ciclo-mgi-intro"},
+  {id:13,nombre:"UC 13 Hematología - Inmunología",previas:[5],ciclo:"ciclo-mgi-intro"},
+  {id:14,nombre:"UC 14 Metodología Científica 1",previas:["2","5|13"],ciclo:"ciclo-metodo1"},
+
+  {id:15,nombre:"UC 15 Medicina en el Primer Nivel de Atención",previas:["TRIENIO"],ciclo:"ciclo-clinico"},
+  {id:16,nombre:"UC 16 Bases Científicas de la Patología",previas:["TRIENIO"],ciclo:"ciclo-clinico"},
+  {id:17,nombre:"UC 17 Pediatría",previas:["TRIENIO"],ciclo:"ciclo-clinico"},
+  {id:18,nombre:"UC 18 Ginecología y Neonatología",previas:[15,16],ciclo:"ciclo-clinico"},
+  {id:19,nombre:"UC 19 Clínica Médica",previas:[15,16],ciclo:"ciclo-clinico"},
+  {id:20,nombre:"UC 20 Patología Médica y Terapéutica",previas:[16],ciclo:"ciclo-clinico"},
+  {id:21,nombre:"UC 21 Clínica Quirúrgica",previas:[15,16],ciclo:"ciclo-clinico"},
+  {id:22,nombre:"UC 22 Patología Quirúrgica",previas:[16],ciclo:"ciclo-clinico"},
+  {id:23,nombre:"UC 23 Medicina Familiar y Comunitaria y Salud Mental",previas:[15],ciclo:"ciclo-clinico"},
+
+  {id:24,nombre:"UC 24 Metodología Científica 2",previas:[15,16,"17|23"],ciclo:"ciclo-metodo2"},
+  {id:25,nombre:"UC 25 Internado Rotatorio",previas:["ALL"],ciclo:"ciclo-internado"}
 ];
+
 
 const columnas = [
   {
