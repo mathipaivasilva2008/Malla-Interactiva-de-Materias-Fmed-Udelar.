@@ -14,7 +14,8 @@
   --text:#1f2937;
   --muted:#6b7280;
 }
-  .ciclo-intro { border-left: 6px solid #60a5fa; }
+
+.ciclo-intro { border-left: 6px solid #60a5fa; }
 .ciclo-basico { border-left: 6px solid #34d399; }
 .ciclo-metodo1 { border-left: 6px solid #fbbf24; }
 .ciclo-mgi-intro { border-left: 6px solid #a78bfa; }
@@ -22,8 +23,8 @@
 .ciclo-metodo2 { border-left: 6px solid #f97316; }
 .ciclo-internado { border-left: 6px solid #22d3ee; }
 
-
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
@@ -33,21 +34,50 @@ body{
 
 h1{
   text-align:center;
-  margin:20px 0;
+  margin:28px 0 10px;
 }
 
+/* LOGO */
+.logo-fmed{
+  position:absolute;
+  top:16px;
+  left:16px;
+  width:75px;
+  opacity:0.95;
+}
+
+/* GRID CONTENEDORA */
 .grid{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
   gap:20px;
-  padding:20px;
+  padding:30px;
+  margin:20px;
+  background:linear-gradient(135deg, #eaf2ff, #f7faff);
+  border-radius:24px;
+  position:relative;
+  overflow:hidden;
 }
 
+/* CADUCEO DE FONDO */
+.bg-caduceo{
+  position:absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  width:320px;
+  opacity:0.06;
+  pointer-events:none;
+}
+
+/* COLUMNAS */
 .column{
   background:var(--card);
   border-radius:14px;
   padding:15px;
   box-shadow:0 6px 20px rgba(0,0,0,.06);
+  position:relative;
+  z-index:1;
 }
 
 .column h2{
@@ -56,6 +86,7 @@ h1{
   margin-bottom:10px;
 }
 
+/* UCS */
 .uc{
   padding:10px;
   border-radius:10px;
@@ -65,13 +96,8 @@ h1{
   transition:.2s;
 }
 
-.uc.approved{
-  background:var(--approved);
-}
-
-.uc.unlocked{
-  background:#eef3ff;
-}
+.uc.approved{ background:var(--approved); }
+.uc.unlocked{ background:#eef3ff; }
 
 .uc.locked{
   background:var(--locked);
@@ -83,6 +109,7 @@ h1{
   transform:scale(1.02);
 }
 
+/* TOOLTIP */
 .tooltip{
   display:none;
   position:absolute;
@@ -94,23 +121,36 @@ h1{
   padding:6px 8px;
   border-radius:6px;
   font-size:.75rem;
-  width:max-content;
   max-width:220px;
   text-align:center;
   z-index:10;
 }
 
-.uc.locked:hover .tooltip{
-  display:block;
+.uc.locked:hover .tooltip{ display:block; }
+
+/* FIRMA */
+.footer{
+  text-align:center;
+  margin:25px 0 15px;
+  font-size:.85rem;
+  color:var(--muted);
 }
 </style>
 </head>
 
 <body>
 
+<img src="escudo-fmed.png" alt="Escudo Facultad de Medicina" class="logo-fmed">
+
 <h1>Malla Curricular – Doctor en Medicina</h1>
 
-<div class="grid" id="malla"></div>
+<div class="grid" id="malla">
+  <img src="caduceo.png" class="bg-caduceo" alt="">
+</div>
+
+<div class="footer">
+  Malla interactiva creada por <strong>Mathías Paiva</strong>
+</div>
 
 <script>
 const materias = [
@@ -118,35 +158,26 @@ const materias = [
   {id:2,nombre:"UC 2 Introducción a la Bioestadística",previas:[], ciclo:"intro"},
   {id:3,nombre:"UC 3 Salud Pública y Humanidades e Introducción a la Bioética",previas:[], ciclo:"intro"},
   {id:4,nombre:"UC 4 Aprendizaje en Territorio 1",previas:[], ciclo:"intro"},
-
   {id:5,nombre:"UC 5 Biología Celular y Molecular",previas:[1], ciclo:"basico"},
   {id:6,nombre:"UC 6 Aprendizaje en Territorio 2",previas:[4], ciclo:"basico"},
-
   {id:7,nombre:"UC 7 Anatomía Clínica y Bioética",previas:[3], ciclo:"basico"},
   {id:8,nombre:"UC 8 Histología General - Biofísica del Músculo y la Locomoción",previas:[5], ciclo:"basico"},
-
   {id:9,nombre:"UC 9 Histología Neuro, Cardio y Respiratorio",previas:[5], ciclo:"basico"},
   {id:10,nombre:"UC 10 Neurociencias",previas:[5], ciclo:"basico"},
   {id:11,nombre:"UC 11 Cardiovascular y Respiratorio",previas:[5], ciclo:"basico"},
-
   {id:12,nombre:"UC 12 Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo",previas:[5,7], ciclo:"basico"},
-
   {id:13,nombre:"UC 13 Hematología - Inmunología",previas:[5], ciclo:"basico"},
   {id:14,nombre:"UC 14 Metodología Científica 1",previas:["2","5|13"], ciclo:"metodo1"},
-
   {id:15,nombre:"UC 15 Medicina en el Primer Nivel de Atención",previas:["TRIENIO"], ciclo:"mgi-intro"},
   {id:16,nombre:"UC 16 Bases Científicas de la Patología",previas:["TRIENIO"], ciclo:"mgi-intro"},
   {id:17,nombre:"UC 17 Pediatría",previas:["TRIENIO"], ciclo:"clinico"},
-
   {id:18,nombre:"UC 18 Ginecología y Neonatología",previas:[15,16], ciclo:"clinico"},
   {id:19,nombre:"UC 19 Clínica Médica",previas:[15,16], ciclo:"clinico"},
   {id:20,nombre:"UC 20 Patología Médica y Terapéutica",previas:[16], ciclo:"clinico"},
   {id:21,nombre:"UC 21 Clínica Quirúrgica",previas:[15,16], ciclo:"clinico"},
   {id:22,nombre:"UC 22 Patología Quirúrgica",previas:[16], ciclo:"clinico"},
   {id:23,nombre:"UC 23 Medicina Familiar y Comunitaria y Salud Mental",previas:[15], ciclo:"clinico"},
-
   {id:24,nombre:"UC 24 Metodología Científica 2",previas:[15,16,"17|23"], ciclo:"metodo2"},
-
   {id:25,nombre:"UC 25 Internado Rotatorio",previas:["ALL"], ciclo:"internado"}
 ];
 
@@ -164,23 +195,17 @@ let aprobadas = JSON.parse(localStorage.getItem("aprobadas")||"[]");
 
 function tienePrevias(m){
   if(m.previas.length===0) return true;
-
   return m.previas.every(p=>{
     if(p==="TRIENIO") return [1,2,3,4,5,6,7,8,9,10,11,12].every(id=>aprobadas.includes(id));
-   if(p==="ALL") return materias
-  .filter(x => x.id !== m.id)
-  .every(x => aprobadas.includes(x.id));
-
-    if(String(p).includes("|")){
-      return p.split("|").some(x=>aprobadas.includes(Number(x)));
-    }
+    if(p==="ALL") return materias.filter(x=>x.id!==m.id).every(x=>aprobadas.includes(x.id));
+    if(String(p).includes("|")) return p.split("|").some(x=>aprobadas.includes(Number(x)));
     return aprobadas.includes(Number(p));
   });
 }
 
 function render(){
   const cont=document.getElementById("malla");
-  cont.innerHTML="";
+  cont.innerHTML=`<img src="caduceo.png" class="bg-caduceo" alt="">`;
 
   columnas.forEach(col=>{
     const div=document.createElement("div");
@@ -193,48 +218,31 @@ function render(){
       const aprobado=aprobadas.includes(id);
 
       const uc=document.createElement("div");
-    uc.className = "uc ciclo-" + m.ciclo + " " + (aprobado ? "approved" : ok ? "unlocked" : "locked");
-
+      uc.className=`uc ciclo-${m.ciclo} ${aprobado?"approved":ok?"unlocked":"locked"}`;
       uc.textContent=m.nombre;
 
       if(!ok){
-        const faltan=m.previas.filter(p=>{
-          if(p==="TRIENIO") return true;
-          if(p==="ALL") return true;
-          if(String(p).includes("|")){
-            return !p.split("|").some(x=>aprobadas.includes(Number(x)));
-          }
-          return !aprobadas.includes(Number(p));
-        }).map(p=>"UC "+p).join(", ");
-
         const tt=document.createElement("div");
         tt.className="tooltip";
-        tt.textContent="Falta aprobar: "+faltan;
+        tt.textContent="Tiene previas pendientes";
         uc.appendChild(tt);
       }
 
       uc.onclick=()=>{
         if(!ok) return;
-        if(aprobado){
-          aprobadas=aprobadas.filter(x=>x!==id);
-        }else{
-          aprobadas.push(id);
-        }
+        aprobado ? aprobadas=aprobadas.filter(x=>x!==id) : aprobadas.push(id);
         localStorage.setItem("aprobadas",JSON.stringify(aprobadas));
         render();
       };
 
       div.appendChild(uc);
     });
-
     cont.appendChild(div);
   });
 }
-
 render();
 </script>
 
 </body>
 </html>
-
 
