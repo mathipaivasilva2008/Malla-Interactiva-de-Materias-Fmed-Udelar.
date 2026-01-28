@@ -13,6 +13,7 @@
   --text:#1f2937;
   --muted:#6b7280;
 }
+
 /* COLORES POR CICLO */
 .ciclo-intro { border-left: 6px solid #60a5fa; }
 .ciclo-basico { border-left: 6px solid #34d399; }
@@ -36,7 +37,6 @@ h1{
   margin:30px 0 10px;
 }
 
-/* LOGO */
 .logo-fmed{
   position:absolute;
   top:16px;
@@ -44,7 +44,6 @@ h1{
   width:75px;
 }
 
-/* GRID GENERAL */
 .grid{
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
@@ -54,10 +53,8 @@ h1{
   background:linear-gradient(135deg, #eaf2ff, #f7faff);
   border-radius:24px;
   position:relative;
-  overflow:hidden;
 }
 
-/* CADUCEO */
 .bg-caduceo{
   position:absolute;
   bottom:40px;
@@ -65,26 +62,15 @@ h1{
   transform:translateX(-50%);
   width:320px;
   opacity:0.06;
-  pointer-events:none;
 }
 
-/* COLUMNAS */
 .column{
   background:#fff;
   border-radius:14px;
   padding:15px;
   box-shadow:0 6px 20px rgba(0,0,0,.06);
-  position:relative;
-  z-index:1;
 }
 
-.column h2{
-  text-align:center;
-  font-size:1.1rem;
-  margin-bottom:6px;
-}
-
-/* SEMESTRES */
 .semestre{
   margin-top:12px;
   padding-top:6px;
@@ -95,10 +81,8 @@ h1{
   text-align:center;
   font-size:.9rem;
   color:var(--muted);
-  margin:6px 0 8px;
 }
 
-/* UCS */
 .uc{
   padding:10px;
   border-radius:10px;
@@ -119,7 +103,6 @@ h1{
   transform:scale(1.02);
 }
 
-/* FIRMA */
 .footer{
   text-align:center;
   margin:25px 0 15px;
@@ -131,12 +114,11 @@ h1{
 
 <body>
 
-<img src="escudo-fmed.png" class="logo-fmed" alt="Escudo FMed">
-
+<img src="escudo-fmed.png" class="logo-fmed">
 <h1>Malla Curricular – Doctor en Medicina</h1>
 
 <div class="grid" id="malla">
-  <img src="caduceo.png" class="bg-caduceo" alt="">
+  <img src="caduceo.png" class="bg-caduceo">
 </div>
 
 <div class="footer">
@@ -145,64 +127,46 @@ h1{
 
 <script>
 const materias = [
-  {id:1,nombre:"UC 1 Introducción a la Biología Celular y Molecular",previas:[],ciclo:"ciclo-intro"},
-  {id:2,nombre:"UC 2 Introducción a la Bioestadística",previas:[],ciclo:"ciclo-intro"},
-  {id:3,nombre:"UC 3 Salud Pública y Humanidades e Introducción a la Bioética",previas:[],ciclo:"ciclo-intro"},
-  {id:4,nombre:"UC 4 Aprendizaje en Territorio 1",previas:[],ciclo:"ciclo-intro"},
+  {id:1,nombre:"UC 1 Introducción a la Biología Celular y Molecular",previas:[], ciclo:"ciclo-intro"},
+  {id:2,nombre:"UC 2 Introducción a la Bioestadística",previas:[], ciclo:"ciclo-intro"},
+  {id:3,nombre:"UC 3 Salud Pública y Humanidades e Introducción a la Bioética",previas:[], ciclo:"ciclo-intro"},
+  {id:4,nombre:"UC 4 Aprendizaje en Territorio 1",previas:[], ciclo:"ciclo-intro"},
 
-  {id:5,nombre:"UC 5 Biología Celular y Molecular",previas:[1],ciclo:"ciclo-basico"},
-  {id:6,nombre:"UC 6 Aprendizaje en Territorio 2",previas:[4],ciclo:"ciclo-basico"},
-  {id:7,nombre:"UC 7 Anatomía Clínica y Bioética",previas:[3],ciclo:"ciclo-basico"},
-  {id:8,nombre:"UC 8 Histología General - Biofísica del Músculo y la Locomoción",previas:[5],ciclo:"ciclo-basico"},
-  {id:9,nombre:"UC 9 Histología Neuro, Cardio y Respiratorio",previas:[5],ciclo:"ciclo-basico"},
-  {id:10,nombre:"UC 10 Neurociencias",previas:[5],ciclo:"ciclo-basico"},
-  {id:11,nombre:"UC 11 Cardiovascular y Respiratorio",previas:[5],ciclo:"ciclo-basico"},
+  {id:5,nombre:"UC 5 Biología Celular y Molecular",previas:[1], ciclo:"ciclo-basico"},
+  {id:6,nombre:"UC 6 Aprendizaje en Territorio 2",previas:[4], ciclo:"ciclo-basico"},
+  {id:7,nombre:"UC 7 Anatomía Clínica y Bioética",previas:[3], ciclo:"ciclo-basico"},
+  {id:8,nombre:"UC 8 Histología General - Biofísica",previas:[5], ciclo:"ciclo-basico"},
+  {id:9,nombre:"UC 9 Histología Neuro, Cardio y Respiratorio",previas:[5], ciclo:"ciclo-basico"},
+  {id:10,nombre:"UC 10 Neurociencias",previas:[5], ciclo:"ciclo-basico"},
+  {id:11,nombre:"UC 11 Cardiovascular y Respiratorio",previas:[5], ciclo:"ciclo-basico"},
+  {id:12,nombre:"UC 12 Digestivo, Renal, Endocrino y Reproductor",previas:[5,7], ciclo:"ciclo-basico"},
+  {id:13,nombre:"UC 13 Hematología - Inmunología",previas:[5], ciclo:"ciclo-basico"},
 
-  {id:12,nombre:"UC 12 Digestivo, Renal, Endocrino, Metabólico, Reproductor y Desarrollo",previas:[5,7],ciclo:"ciclo-basico"},
-  {id:13,nombre:"UC 13 Hematología - Inmunología",previas:[5],ciclo:"ciclo-basico"},
-  {id:14,nombre:"UC 14 Metodología Científica 1",previas:["2","5|13"],ciclo:"ciclo-metodo1"},
+  {id:14,nombre:"UC 14 Metodología Científica 1",previas:["2","5|13"], ciclo:"ciclo-metodo1"},
 
-  {id:15,nombre:"UC 15 Medicina en el Primer Nivel de Atención",previas:["TRIENIO"],ciclo:"ciclo-mgi-intro"},
-  {id:16,nombre:"UC 16 Bases Científicas de la Patología",previas:["TRIENIO"],ciclo:"ciclo-mgi-intro"},
-  {id:17,nombre:"UC 17 Pediatría",previas:["TRIENIO"],ciclo:"ciclo-clinico"},
-  {id:18,nombre:"UC 18 Ginecología y Neonatología",previas:[15,16],ciclo:"ciclo-clinico"},
-  {id:19,nombre:"UC 19 Clínica Médica",previas:[15,16],ciclo:"ciclo-clinico"},
-  {id:20,nombre:"UC 20 Patología Médica y Terapéutica",previas:[16],ciclo:"ciclo-clinico"},
-  {id:21,nombre:"UC 21 Clínica Quirúrgica",previas:[15,16],ciclo:"ciclo-clinico"},
-  {id:22,nombre:"UC 22 Patología Quirúrgica",previas:[16],ciclo:"ciclo-clinico"},
-  {id:23,nombre:"UC 23 Medicina Familiar y Comunitaria y Salud Mental",previas:[15],ciclo:"ciclo-clinico"},
+  {id:15,nombre:"UC 15 Medicina en el Primer Nivel de Atención",previas:["TRIENIO"], ciclo:"ciclo-mgi-intro"},
+  {id:16,nombre:"UC 16 Bases Científicas de la Patología",previas:["TRIENIO"], ciclo:"ciclo-mgi-intro"},
 
-  {id:24,nombre:"UC 24 Metodología Científica 2",previas:[15,16,"17|23"],ciclo:"ciclo-metodo2"},
-  {id:25,nombre:"UC 25 Internado Rotatorio",previas:["ALL"],ciclo:"ciclo-internado"}
+  {id:17,nombre:"UC 17 Pediatría",previas:["TRIENIO"], ciclo:"ciclo-clinico"},
+  {id:18,nombre:"UC 18 Ginecología y Neonatología",previas:[15,16], ciclo:"ciclo-clinico"},
+  {id:19,nombre:"UC 19 Clínica Médica",previas:[15,16], ciclo:"ciclo-clinico"},
+  {id:20,nombre:"UC 20 Patología Médica y Terapéutica",previas:[16], ciclo:"ciclo-clinico"},
+  {id:21,nombre:"UC 21 Clínica Quirúrgica",previas:[15,16], ciclo:"ciclo-clinico"},
+  {id:22,nombre:"UC 22 Patología Quirúrgica",previas:[16], ciclo:"ciclo-clinico"},
+  {id:23,nombre:"UC 23 Medicina Familiar y Comunitaria y Salud Mental",previas:[15], ciclo:"ciclo-clinico"},
+
+  {id:24,nombre:"UC 24 Metodología Científica 2",previas:[15,16,"17|23"], ciclo:"ciclo-metodo2"},
+  {id:25,nombre:"UC 25 Internado Rotatorio",previas:["ALL"], ciclo:"ciclo-internado"}
 ];
 
-
 const columnas = [
-  {
-    titulo:"Primer Año",
-    semestres:{
-      "Semestre 1":[1,2,3,4],
-      "Semestre 2":[5,6]
-    }
-  },
-  {
-    titulo:"Segundo Año",
-    semestres:{
-      "Semestre 1":[7,8],
-      "Semestre 2":[9,10,11]
-    }
-  },
-  {
-    titulo:"Tercer Año",
-    semestres:{
-      "Semestre 1":[12],
-      "Semestre 2":[13,14]
-    }
-  },
-  { titulo:"Cuarto Año", semestres:{ "Anual":[15,16,17] } },
-  { titulo:"Quinto Año", semestres:{ "Anual":[19,20] } },
-  { titulo:"Sexto Año", semestres:{ "Anual":[18,21,22,23,24] } },
-  { titulo:"Séptimo Año", semestres:{ "Anual":[25] } }
+  {titulo:"Primer Año", semestres:{ "Semestre 1":[1,2,3,4], "Semestre 2":[5,6]}},
+  {titulo:"Segundo Año", semestres:{ "Semestre 1":[7,8], "Semestre 2":[9,10,11]}},
+  {titulo:"Tercer Año", semestres:{ "Semestre 1":[12], "Semestre 2":[13,14]}},
+  {titulo:"Cuarto Año", semestres:{ "Anual":[15,16,17]}},
+  {titulo:"Quinto Año", semestres:{ "Anual":[19,20]}},
+  {titulo:"Sexto Año", semestres:{ "Anual":[18,21,22,23,24]}},
+  {titulo:"Séptimo Año", semestres:{ "Anual":[25]}}
 ];
 
 let aprobadas = JSON.parse(localStorage.getItem("aprobadas")||"[]");
@@ -237,7 +201,7 @@ function render(){
         const aprobado=aprobadas.includes(id);
 
         const uc=document.createElement("div");
-        uc.className = `uc ${m.ciclo} ${aprobado?"approved":ok?"unlocked":"locked"}`;
+        uc.className=`uc ${m.ciclo} ${aprobado?"approved":ok?"unlocked":"locked"}`;
         uc.textContent=m.nombre;
 
         uc.onclick=()=>{
@@ -262,3 +226,5 @@ render();
 
 </body>
 </html>
+
+
